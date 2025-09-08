@@ -1,14 +1,35 @@
-const { createServer } = require('node:http');
+const express = require('express');
+const app = express();
+let users =[{id: 1,name: "Béla", age: 22,gender: "male" },
+  {id:2,name: "Éva", age: 18, gender: "female"},
+  {id:3,name: "Tamás", age: 45, gender: "male"},
+  
+ 
+  
+]
 
-const hostname = '127.0.0.1';
-const port = 3000;
 
-const server = createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World');
+app.get("/",(req, res) => {
+ 
+  res.send('Bajai SZ Türr István Technikum - 13.a Szoftverfejlesztő' );
+});
+app.get("/users",(req, res) => {
+ 
+  res.send(users );
 });
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+
+app.get("/users/:id",(req, res) => {
+  let id = req.params.id;
+  let idx = users.findIndex(user => user.id == id);
+  
+  if (idx>-1) {
+    return res.send(users[idx]);
+  }
+  return res.send("Nincs ilyen id-jű user" );
+
 });
+
+
+
+app.listen(3000)
