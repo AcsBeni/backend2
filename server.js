@@ -31,23 +31,30 @@ app.get("/users/:id",(req, res) => {
   if (idx>-1) {
     return res.send(users[idx]);
   }
-  return res.send("Nincs ilyen id-jű user" );
+  return res.status(400).send("Nincs ilyen id-jű user" );
 
 });
 //Rest client hf
 //post new user
 
 app.post("/users",(req, res) => {
+
   let data = req.body;
+  if(isEmailValid(data.email)) {
+    return res.status(400).send({msg: "Már létező email cím"});
+  }
   data.id = getnextid();
   users.push(data);
   saveusers();
-  res.send(users);
+  res.send({msg: "Sikeres regisztráció"});
  
 });
 
 //update user by id
 app.patch("/users/:id",(req, res) => {
+  if(isEmailValid(data.email)) {
+    return res.status(400).send({msg: "Már létező email cím"});
+  }
   let id = req.params.id;
   let data = req.body;
   let idx = users.findIndex(user => user.id == id);
@@ -56,9 +63,13 @@ app.patch("/users/:id",(req, res) => {
     users[idx].id = Number(id);
     return res.send('A felhasználó adatai frissítve lettek' );
   }
-  return res.send("Nincs ilyen id-jű user" );
+  return res.status(400).send("Nincs ilyen id-jű user" );
 });
-
+/*
+git add .
+git commit -m "commit lett"
+git push -u origin main      
+*/
 
 
 //delete user by id
@@ -108,4 +119,13 @@ function loadusers() {
 }
 function saveusers() {
   fs.writeFileSync(USERS_FILE,JSON.stringify(users));
+}
+function isEmailValid(email) {
+  let exist = false;
+  users.forEach(user => {
+    if(user.email == email) {
+      exist = true;
+    }
+  });
+  return exist;
 }
