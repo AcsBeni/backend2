@@ -18,14 +18,15 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
- "name": "Béla",
-  "email": "bela@gmail.com",
+  "name": "peti",
+  "email": "peti@gmail.com",
   "password": "Jelszo123"
+   
 }
 
 ### Delete user
 
-DELETE http://localhost:3000/users/1
+DELETE http://localhost:3000/users/5
 Content-Type: application/json
 
 

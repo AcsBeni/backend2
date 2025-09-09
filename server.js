@@ -2,9 +2,12 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const app = express();
+var cors = require('cors');
 //middleware
+app.use(cors());
 app.use(express.json()); //json formátum megkövetelése
 app.use(express.urlencoded({ extended: true })); // req.body használata
+
 
 
 let users =[]
@@ -38,8 +41,9 @@ app.post("/users",(req, res) => {
   let data = req.body;
   data.id = getnextid();
   users.push(data);
-  res.send(users);
   saveusers();
+  res.send(users);
+ 
 });
 
 //update user by id
@@ -73,7 +77,8 @@ app.listen(3000)
 //other functions
 function getnextid() {
   let nextid = 1;
-  if(users.length>0) {
+  if(users.length==0) {
+    
     return nextid;
   }
   let maxid = 0;
