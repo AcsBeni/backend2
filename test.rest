@@ -3,6 +3,17 @@
 GET http://localhost:3000/
 Content-Type: application/json
 
+### Post logged user data
+
+POST http://localhost:3000/users/login
+Content-Type: application/json
+
+{ 
+  "email": "Ember@gmail.com",
+  "password": "123"
+}
+
+
 ### GET users
 GET http://localhost:3000/users
 Content-Type: application/json
@@ -26,7 +37,7 @@ Content-Type: application/json
 
 ### Delete user
 
-DELETE http://localhost:3000/users/5
+DELETE http://localhost:3000/users/10
 Content-Type: application/json
 
 
@@ -39,4 +50,15 @@ Content-Type: application/json
   "name": "Béla",
   "email": "Teszt@gmail.com",
   "password": "Jelszo123"
+}
+
+### Modify user
+
+PATCH  http://localhost:3000/users/profile
+Content-Type: application/json
+
+{
+  "name": "Béla",
+  "email": "bela@gmail.com",
+  "password": "Jelszp123"
 }

@@ -49,6 +49,34 @@ app.post("/users",(req, res) => {
   res.send({msg: "Sikeres regisztráció"});
  
 });
+//Post check user login
+app.post("/users/login",(req, res) => {
+
+    let {email, password} = req.body;
+    let loggeduser = {};
+    users.forEach(user => {
+    if(user.email == email && user.password == password) {
+        loggeduser = user;
+        return;
+    }
+  })
+  res.send(loggeduser);
+});
+
+//modify user
+app.patch("/users/profile",(req, res) => {
+  let data = req.body;
+  let idx = users.findIndex(user => user.email == data.email);
+  if (idx>-1) {
+    users[idx] = data;
+    saveusers();
+    return res.send(users[idx]);
+  }
+  
+
+});
+
+
 
 //update user by id
 app.patch("/users/:id",(req, res) => {
